@@ -35,6 +35,6 @@
 __pycache__
 .idea
 
-
+!requirements.txt
 !media
 !media/*

@@ -3,9 +3,11 @@
 ## [Paper](https://arxiv.org/abs/2204.10776)
 
 ## Setup
+requires python >=3.9
 1. run:
 ```
-git clone
+git clone https://github.com/scy639/Extreme-Two-View-Geometry-From-Object-Poses-with-Diffusion-Models.git
+cd Extreme-Two-View-Geometry-From-Object-Poses-with-Diffusion-Models
 pip install -r requirements.txt
 mkdir -p install
 cd install
@@ -49,6 +51,7 @@ Modify infer_custom.py and run it.
 For more config, refer to src/root_config.py -->
 
 ## Todo List
+- [ ] Check setup; check released version's performance is the same as the version when doing experiments
 - [ ] Upload GSO testset to a cloud drive
 - [ ] Remove unused code; better document and comment
 - [ ] Provide command line interface
@@ -56,7 +59,7 @@ For more config, refer to src/root_config.py -->
 <!--  ## Acknowledgements -->
 
 ## Citation
-
+```
 @misc{sun2024extreme,
       title={Extreme Two-View Geometry From Object Poses with Diffusion Models}, 
       author={Yujing Sun and Caiyi Sun and Yuan Liu and Yuexin Ma and Siu Ming Yiu},
@@ -65,9 +68,6 @@ For more config, refer to src/root_config.py -->
       archivePrefix={arXiv},
       primaryClass={cs.CV}
 }
+```
 
 
-
-
-SAMPLE_BATCH_SIZE
-SAMPLE_BATCH_B_SIZE
