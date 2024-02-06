@@ -1,0 +1,21 @@
+name: gen6d_pretrain
+type: gen6d
+
+detector: configs/detector/detector_pretrain.yaml
+selector: configs/selector/selector_pretrain.yaml
+refiner:  configs/refiner/refiner_pretrain.yaml
+
+# ref_resolution: 128   # reference image resolution
+# ref_view_num: 64      # view number used in selection
+#scy
+ref_resolution: 128   # reference image resolution
+# ref_view_num: 128      # view number used in selection
+#ref_view_num: 128*4
+#ref_view_num: 512
+
+# read from root_config.NUM_REF
+ref_view_num: -1
+
+
+det_ref_view_num: 32  # view number used in detection
+refine_iter: 3        # refinement iteration number

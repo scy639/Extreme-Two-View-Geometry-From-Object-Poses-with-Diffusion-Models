@@ -1,0 +1,25 @@
+# 忽略所有文件和文件夹
+*
+#!*/将所有子目录列入白名单；new bing
+!*/
+# 不忽略.py文件
+!*.py
+!*.yaml
+!.gitignore
+!git-alias.txt
+.idea
+# .vscode
+
+
+!.vscode
+!.vscode/settings.json
+
+*.pkl
+*.ply
+*.db
+*.vis
+*.bin
+*.lnk
+
+#忽略scy/temp:
+#temp
