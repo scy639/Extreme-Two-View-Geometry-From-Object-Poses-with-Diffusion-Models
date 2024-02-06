@@ -1,6 +1,6 @@
 # Extreme-Two-View-Geometry-From-Object-Poses-with-Diffusion-Models
 
-## [Paper](https://arxiv.org/abs/2204.10776)
+## [Paper](https://arxiv.org/abs/2402.02800)
 
 ## Setup
 requires python >=3.9
