@@ -22,7 +22,7 @@ def run(l_datasetName,model_name ="E2VG"):
     SUFFIX=""
     for datasetName,cate,seq, q0 in l__datasetName_cate_seq_Q0INDEX:
         if datasetName=='navi':
-            root_config.tmp_batch_image__SUFFIX='.jpg'
+            root_config.tmp_batch_image__SUFFIX='.jpg' #save disk space
         assert seq==""# only co3d has the seq level
         root_config.DATASET = datasetName
         for Q0INDEX in [q0]:

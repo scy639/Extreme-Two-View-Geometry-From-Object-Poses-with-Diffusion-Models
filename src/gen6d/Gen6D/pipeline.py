@@ -276,7 +276,7 @@ class Estimator4Co3dEval():
             images_out
             gen6d_inter_result.json
         ref_folder_build_OVER 
-        intermediateResult.json # saved by zero123 scy_run1.py
+        intermediateResult.json  
         '(0-127).jpg'
         ...
         

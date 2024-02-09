@@ -59,11 +59,7 @@ def visualize_intermediate_results(img, K, inter_results, ref_info, object_bbox_
         pr_bbox = np.concatenate(
             [det_position - size / 2 * det_scale_r2q, np.full(2, size) * det_scale_r2q])
         bbox_img = img
-        """
-        第一张图(左上角):bbox
-            蓝色:预测的bbox；(点为scy加的，表示position(obj中心点
-            绿色:GT bbox
-        """
+
         if pose_gt is not None:
             bbox_img = draw_bbox(bbox_img, gt_bbox, color=(0, 255, 0))
         bbox_img = draw_bbox(bbox_img, pr_bbox, color=(0, 0, 255))

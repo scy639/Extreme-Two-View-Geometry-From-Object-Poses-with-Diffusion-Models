@@ -78,7 +78,7 @@ def eval_on_an_obj(
         raise NotImplementedError
     if (model_name == "relpose++"):
         checkpoint_path='/sharedata/home/suncaiyi/space/cv/baseline/relpose_plus_plus_main/weights/relposepp'
-        relposepp_model, _ = get_model_scyWrap(model_dir=checkpoint_path, device=device)
+        relposepp_model, _ = get_relposepp_model_Wrap(model_dir=checkpoint_path, device=device)
 
     # iterable = tqdm(dataset) if use_pbar else dataset
     # seqAndPair2err = {}

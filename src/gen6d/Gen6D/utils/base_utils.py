@@ -645,7 +645,7 @@ def transformation_decompose_2d(M):
     offset = M[:2,2]
     return scale, rotation, offset
 
-#scy: pure crop. Affine instead of Perspective
+# : pure crop. Affine instead of Perspective
 def transformation_crop(img, position, scale, angle, size, new_position=None):
     M = transformation_offset_2d(-position[0], -position[1])
     M = transformation_compose_2d(M, transformation_scale_2d(scale))

@@ -148,7 +148,7 @@ def main(args):
         h,w=int(h/SCALE_DOWN),int(w/SCALE_DOWN)
         img=cv2.resize(img,(w,h))
 
-        f = np.sqrt(h ** 2 + w ** 2)  # scyQ
+        f = np.sqrt(h ** 2 + w ** 2)  #  
         # 
         K = np.asarray([[f, 0, w / 2], [0, f, h / 2], [0, 0, 1]], np.float32)
 

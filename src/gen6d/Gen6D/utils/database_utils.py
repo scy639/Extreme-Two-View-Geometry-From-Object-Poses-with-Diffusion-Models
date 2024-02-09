@@ -24,9 +24,7 @@ else:
 
 
 def look_at_crop(img, K, pose, position, angle, scale, h, w):
-    """scy:
-    不是简单的crop，而是有一个透视变换(cv2.warpPerspective)。
-    我之前一直以为这里仅仅是纯粹的crop，因而不应有R变化，只有K变化。现在明白了
+    """
 
     when forward, only in refiner it is called. when selector use raw q_img
     """
@@ -129,7 +127,7 @@ def normalize_reference_views(database, ref_ids, size, margin,
                                                  ref_scales[k], size, size)[0] for rot in rots_list], 0)
             ref_imgs_rots.append(ref_img_rot)
 
-        # print("scy id=",ref_ids[k])
+        # print("  id=",ref_ids[k])
         ref_img_new, ref_K_new, ref_pose_new, ref_pose_rect, ref_H = look_at_crop(
             ref_img, ref_Ks[k], ref_poses[k], ref_cens[k], ref_vert_angle[k], ref_scales[k], size, size)
         if (save_normalized_ref_imgs):

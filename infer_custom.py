@@ -13,7 +13,7 @@ from infer_pairs import infer_pairs_wrapper
 root_config.CONSIDER_IPR=False # IPR means inplane rotation. if the object in reference image is not oriented correctly,  set CONSIDER_IPR=True to enable inplane rotation predictor; if oriented correctly, set set CONSIDER_IPR=0 to skip inplane rotation estimation to save time
 # If GPU out of memory, decrease the following values:
 root_config.SAMPLE_BATCH_SIZE = 32
-root_config.SAMPLE_BATCH_B_SIZE = 4
+root_config.SAMPLE_BATCH_B_SIZE = 9
 
 
 

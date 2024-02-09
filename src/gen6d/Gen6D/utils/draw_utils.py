@@ -336,9 +336,6 @@ def draw_gradient_line(img, start_point, end_point, start_color, end_color, half
 
 def draw_bbox_3d_dpt(img, pts2d, dpt, color=(0, 255, 0), thickness=2):
     """
-    byscy
-    dpt:shape=[num_pt].深度(相机系下的z坐标
-    z越大，颜色越浅(颜色最深为color，最浅为color-纯白的中间色。z最小时为颜色最深)
     """
     # dpt = np.round(dpt).astype(np.int32)
     max_dpt = np.max(dpt)

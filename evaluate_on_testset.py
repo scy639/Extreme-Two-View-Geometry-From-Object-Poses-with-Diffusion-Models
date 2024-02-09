@@ -7,15 +7,6 @@ sys.path.append(os.path.join(cur_dir, "src"))
 
 
 
-import redirect_util,root_config
-_ = redirect_util.RedirectorB(  
-    log_file_prefix='',
-    redirect_stderr=1,
-    also_to_screen=1,
-)
-
-
-
 
 
 
@@ -32,7 +23,7 @@ def main(datasetName:str,rotate=False):
     root_config.SKIP_EVAL_SEQ_IF_EVAL_RESULT_EXIST = 1 # skip to eval a category if its eval result exists
     # when GPU out of memory, decrease the following values:
     root_config.SAMPLE_BATCH_SIZE = 32
-    root_config.SAMPLE_BATCH_B_SIZE = 4
+    root_config.SAMPLE_BATCH_B_SIZE = 9
     
     
     
@@ -42,7 +33,7 @@ def main(datasetName:str,rotate=False):
         root_config.Q1Sipr=True
     run(  [datasetName] )
 if __name__=='__main__':
-    main(datasetName='gso',)
-    main(datasetName='navi',)
-    main(datasetName='gso',rotate=True)#rotated gso
-    main(datasetName='navi',rotate=True)#rotated navi
+    main(datasetName='gso',)#gso testset
+    main(datasetName='navi',)#navi testset
+    main(datasetName='gso',rotate=True)#rotated gso testset
+    main(datasetName='navi',rotate=True)#rotated navi testset

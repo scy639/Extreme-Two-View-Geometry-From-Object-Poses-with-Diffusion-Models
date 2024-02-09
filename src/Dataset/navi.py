@@ -16,13 +16,14 @@ class NaviDatabase(BaseDatabase) :
         obj,scene = obj_with_scene.split('(')
         scene = scene.replace(')','')
         #
-        DATASET_ROOT = root_config.dataPath_navi
+        DATASET_ROOT =  os.path.abspath  ( root_config.dataPath_navi)
         self._obj_with_scene = obj_with_scene  # bed001,bed002,....
         self.obj = obj  # bed001,bed002,....
         self.scene = scene
         self._dir = Path(f'{DATASET_ROOT}/{self.obj}/{self.scene}')
+        assert self._dir.exists(),f"{str(self._dir)} does not exist"
         #
-        folder__images_after_exif_transpose=self._dir/'scy_images_after_exif_transpose'
+        folder__images_after_exif_transpose=self._dir/'_images_after_exif_transpose'
         ttt355=folder__images_after_exif_transpose
         if   os.path.exists(folder__images_after_exif_transpose):
             ttt355=None

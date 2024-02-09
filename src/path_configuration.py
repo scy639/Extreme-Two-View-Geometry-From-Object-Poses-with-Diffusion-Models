@@ -6,4 +6,3 @@ dataPath_gso='path/to/gso-renderings'
 dataPath_navi=''
 
 
-

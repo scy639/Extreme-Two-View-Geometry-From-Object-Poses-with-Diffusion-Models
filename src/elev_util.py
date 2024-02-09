@@ -85,7 +85,7 @@ def imgPath2elevRadian(K,input_image_path,run4gen6d_main,id_):
             num_samples=1,
             l_xyz=l_xyz,
             base_xyz=(0,0,0),
-            ddim_steps=50,
+            ddim_steps=75,
             K=K,
             only_gen=True,  # dont crop,re center etc
         )

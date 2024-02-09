@@ -38,9 +38,10 @@ class GsoDatabase(BaseDatabase) :
     """
     def __init__(self, obj:str,):
         assert obj.startswith("GSO_") or obj.startswith("gso_")
-        DATASET_ROOT = root_config.dataPath_gso
+        DATASET_ROOT = os.path.abspath(root_config.dataPath_gso)
         self.obj = obj  # bed001,bed002,....
         self._dir = f'{DATASET_ROOT}/{self.obj}'
+        assert  os.path.exists(self._dir)  ,f"{str(self._dir)} does not exist"
         self._img_ids=self._imgFullPaths_2_img_ids__A( glob.glob(f'{self._dir}/*.png'))
         self.poses, self.K = self.__get_poses_K()
         assert len(self.poses)==len(self._img_ids)
@@ -130,7 +131,7 @@ class GsoDatabase(BaseDatabase) :
         return img
     def get_image_full_path(self, img_id):
         png= self._get_rgbaImage_full_path(img_id)
-        rgb_folder=Path(f'{self._dir}/scyRGB')
+        rgb_folder=Path(f'{self._dir}/_RGB')
         rgb_folder.mkdir(exist_ok=1)
         jpg= f'{str(rgb_folder)}/{int(img_id):03}.png'
         if not os.path.exists(jpg):

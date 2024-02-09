@@ -120,7 +120,7 @@ def infer_pairs(
             debug_imsave(Path('infer_pairs')/f'{refId}'/path.name,imgArr)
     # return
     # if (model_name == "relpose++"):
-    #     from baseline.relpose_plus_plus_main.relpose.models.util import get_model_scyWrap
+    #     from baseline.relpose_plus_plus_main.relpose.models.util import get_relposepp_model_Wrap
     #     from Dataset.custom import CustomDataset
     #     #----------dataset
     #     #image_paths;bboxes
@@ -139,7 +139,7 @@ def infer_pairs(
     #     #ckpt
     #     checkpoint_path = '/sharedata/home/suncaiyi/space/cv/baseline/relpose_plus_plus_main/weights/relposepp'
     #     device = root_config.DEVICE if torch.cuda.is_available() else "cpu"
-    #     relposepp_model, _ = get_model_scyWrap(model_dir=checkpoint_path, device=device)
+    #     relposepp_model, _ = get_relposepp_model_Wrap(model_dir=checkpoint_path, device=device)
     model_estimator_instance = None
     image0_path=q0ImageData.path
     l_R_T_pose=[]

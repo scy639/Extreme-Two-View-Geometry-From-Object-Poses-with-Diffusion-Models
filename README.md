@@ -15,8 +15,12 @@ git clone https://github.com/CompVis/taming-transformers.git
 pip install -e taming-transformers/
 git clone https://github.com/openai/CLIP.git
 pip install -e CLIP/
+cd ..
+mkdir -p weight
+cd weight
 wget https://cv.cs.columbia.edu/zero123/assets/105000.ckpt
 wget https://huggingface.co/One-2-3-45/code/resolve/main/one2345_elev_est/tools/weights/indoor_ds_new.ckpt
+cd ..
 ```
 if you have trouble installing Pytorch3D in the above way, follow https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md to install Pytorch3D
 
@@ -31,7 +35,7 @@ if you have trouble installing Pytorch3D in the above way, follow https://github
 ### Evaluate on testset
 Modify evaluate_on_testset.py and run it.
 Before evaluating on GSO, you need to:
-1. download from (coming soon) and run 'unzip gso-renderings.zip'
+1. download gso-renderings.zip from https://drive.google.com/file/d/1fsMGFC3FdRFzWqClOT1jgbNRNqsE5sRv/view?usp=sharing and run 'unzip gso-renderings.zip'
 2. configure src/path_configuration.py:
 ```
 # the parent folder of GSO objects folders (GSO_alarm,GSO_backpack,...)
@@ -52,8 +56,9 @@ For more config, refer to src/root_config.py -->
 
 ## Todo List
 - [ ] Check setup; check released version's performance is the same as the version when doing experiments
-- [ ] Upload GSO testset to a cloud drive
+- [x] Upload GSO testset to a cloud drive
 - [ ] Remove unused code; better document and comment
+- [ ] Remove unused package from requirement.txt
 - [ ] Provide command line interface
 - [ ] ...
 <!--  ## Acknowledgements -->

@@ -270,8 +270,6 @@ class CameraVisualizer:
     def write_image(self, *args, **kwargs):
 
         """
-        scy: from  plotly\basedatatypes.py  BaseFigure write_image
-            调用Figure(BaseFigure).write_image
 
 
         Convert a figure to a static image and write it to a file or writeable

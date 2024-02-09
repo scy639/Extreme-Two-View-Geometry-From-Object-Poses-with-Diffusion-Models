@@ -80,8 +80,6 @@ def main(
     #         "use -n/--name in combination with --resume_from_checkpoint"
     #     )
 
-    # from scy_run1 import *
-    # from scy_run1 import scy_run_demo
     #args: output_dir, input_image_path, num_samples
     folder_output_ims:str=sample_model_( input_image_path=input_image_path, num_samples=num_samples, id=id,
                                   batch_sample=True,

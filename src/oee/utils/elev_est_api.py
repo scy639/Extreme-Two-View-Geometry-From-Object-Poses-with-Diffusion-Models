@@ -452,6 +452,12 @@ def imgPath2IPRbyOEE(
                                     2)
             # l_angle_in_degree=(-4,-2,0,2,4,) coarse_deg+=
         else:#faster configuration
+            l_angle_in_degree = (-40,-30,-20,-10,0,10,20,30,40,)#len=9
+            l_angle_in_degree=[normalize_deg(x) for x in l_angle_in_degree]
+            coarse_deg,_=_f3_(l_angle_in_degree)
+            l_angle_in_degree = (-8,-6,-4,-2,0,2,4,6,8)#len=9-1
+            l_angle_in_degree=[coarse_deg+i for i in l_angle_in_degree]
+            """ more faster than conf above, about several seconds('faster configuration' reported in paper). but I dont know why Racc30 decrease 0.02-0.03 on rotated gso compared to 2024.1 
             l_angle_in_degree = ( -30, -10, 10, 30, ) #len=4
             l_angle_in_degree=[normalize_deg(x) for x in l_angle_in_degree]
             coarse_deg1,_=_f3_(l_angle_in_degree)
@@ -461,6 +467,7 @@ def imgPath2IPRbyOEE(
             coarse_deg2,_=_f3_(l_angle_in_degree)
             l_angle_in_degree = (-4,-2,0,2,4,)#len=4
             l_angle_in_degree=[coarse_deg2+i for i in l_angle_in_degree]
+            """
     l_angle_in_degree=[normalize_deg(x) for x in l_angle_in_degree]
     fine_deg ,path_rot= _f3_(l_angle_in_degree)
     # raise Exception('tmp4iprExB')

@@ -2,9 +2,9 @@
 import rich
 __primitive_print=print
 def print(*args,
-          scy_use_primitive=1,
+          use_primitive=1,
           **kw):
-    if scy_use_primitive:
+    if use_primitive:
         return __primitive_print(*args,**kw)
     else:
         
