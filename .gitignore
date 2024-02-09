@@ -1,5 +1,5 @@
 # !*/
-# !/.gitignore
+!/.gitignore
 
 # !/*.py
 
@@ -37,4 +37,5 @@ __pycache__
 
 !requirements.txt
 !media
-!media/*
+!media/example_custom_data
+!media/example_custom_data/*
