@@ -1,4 +1,0 @@
-[alias]
-  pp =!"f() { git add . && git commit -m \"$1\" && git push origin master; }; f"
-  ff =!"f() { git fetch  && git merge origin/master; }; f"
-  #pp1 =!"f() { git add . ; }; f"

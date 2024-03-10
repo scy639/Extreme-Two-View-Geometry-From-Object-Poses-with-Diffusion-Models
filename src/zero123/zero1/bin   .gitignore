@@ -20,9 +20,11 @@
 # datasets
 # scratch/
 
-
+__pycache__
+.idea
+.vscode
 # ------------------------
-*
+# *
 # !*/
 !util_4_e2vg
 !ldm
