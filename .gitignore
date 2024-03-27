@@ -40,5 +40,6 @@ pytorch3d
 
 !requirements.txt
 !media
+!media/teaser.jpg
 !media/example_custom_data
 !media/example_custom_data/*
