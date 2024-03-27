@@ -29,3 +29,4 @@ transformers==4.22.2
 transforms3d==0.4.1
 webdataset==0.2.5
 yacs==0.1.8
+pytorch3d

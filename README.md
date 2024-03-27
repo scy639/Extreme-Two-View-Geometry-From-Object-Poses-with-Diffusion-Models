@@ -2,8 +2,13 @@
 
 ## [Paper](https://arxiv.org/abs/2402.02800)
 
+## Introduction
+
+Estimate relative camera pose of two images containing a co-visible object
+![teaser](media/teaser.jpg)
+
 ## Setup
-requires python >=3.9
+python >=3.8
 1. run:
 ```
 git clone https://github.com/scy639/Extreme-Two-View-Geometry-From-Object-Poses-with-Diffusion-Models.git
@@ -18,6 +23,7 @@ pip install -e CLIP/
 cd ..
 mkdir -p weight
 cd weight
+mkdir weight_gen6d
 wget https://cv.cs.columbia.edu/zero123/assets/105000.ckpt
 wget https://huggingface.co/One-2-3-45/code/resolve/main/one2345_elev_est/tools/weights/indoor_ds_new.ckpt
 cd ..
@@ -27,7 +33,7 @@ if you have trouble installing Pytorch3D in the above way, follow https://github
 2. download gen6d weight
       - follow https://github.com/liuyuan-pal/Gen6D#Download to download gen6d_pretrain.tar.gz
       - tar -xvf  gen6d_pretrain.tar.gz
-      - now you should have a folder called 'data', move it to gen6d/Gen6D/
+      - now you should have a folder called 'data', move sub folders 'detector_pretrain', 'selector_pretrain' and 'refiner_pretrain' to weight/weight_gen6d/
 
 
 
@@ -61,7 +67,14 @@ For more config, refer to src/root_config.py -->
 - [x] Remove unused package from requirement.txt
 - [ ] Provide command line interface
 - [ ] ...
-<!--  ## Acknowledgements -->
+
+## Acknowledgements
+In this repository, we have used codes from the following repositories. We thank all the authors for sharing great codes.
+- [Gen6D](https://github.com/liuyuan-pal/Gen6D)
+- [zero123](https://github.com/cvlab-columbia/zero123)
+- [One-2-3-45](https://github.com/One-2-3-45/One-2-3-45)
+- [extrinsic2pyramid](https://github.com/demul/extrinsic2pyramid)
+- [LoFTR](https://github.com/zju3dv/LoFTR)
 
 ## Citation
 ```
