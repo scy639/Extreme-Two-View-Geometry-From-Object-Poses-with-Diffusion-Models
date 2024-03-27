@@ -17,7 +17,7 @@ def imgArr_2_objXminYminXmaxYmax(imgArr, bg_color,THRES=5):
     """
     param:
         imgArr: np.array
-        bg_color: 背景颜色，形如 (R, G, B) 的元组
+        bg_color:   (R, G, B) 
     return:
         xmin,ymin,xmax,ymax (type= primitive int,NOT np int)
     """
@@ -131,10 +131,10 @@ def rotate_B(degree_clockwise, pilImage: Image.Image,
              d_hw:tuple=None,#if not None, then pad img to d_hw
              ):
     """
-    逆时针旋转图片 degree_clockwise °
-    version B: (没有A，可以将pilImage.rotate就理解为A) 
-        1. 假定物体背景为白色
-        2. 先pad image (d size= 原图对角线长度),fill color=white;then rotate, detect obj bbox,  crop obj out. if d_hw not None, then pad img to d_hw
+    rotate img by  degree_clockwise °
+    version B:  
+        1.assume  bg is white
+        2. pad img first, fill color=white;then rotate, detect obj bbox,  crop obj out. if d_hw not None, then pad img to d_hw
     """
     assert -360 <= degree_clockwise <= 360
     assert isinstance(pilImage,Image.Image)
@@ -172,7 +172,7 @@ def get__max_bbox_size__after_rotates(img,l_rotates_angle:list):
     """
     param:
         img: PIL.Image.Image
-        l_rotates_angle:  逆时针旋转角度 deg
+        l_rotates_angle:   
     return:
         max_bbox_size: int
     """

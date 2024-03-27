@@ -94,54 +94,6 @@ if __name__=='__main__':
     exit(0)
 
 
-# import sys,os
-#
-#
-# class FilterOut(object):# from https://stackoverflow.com/questions/34904946/how-to-filter-stdout-in-python-logging
-#     def __init__(self, stream, l__filter_the_line_that_contains):
-#         self.stream = stream
-#         self.l__filter_the_line_that_contains = l__filter_the_line_that_contains
-#         # self.pattern = re.compile(re_pattern) if isinstance(re_pattern, str) else re_pattern
-#
-#     def __getattr__(self, attr_name):
-#         return getattr(self.stream, attr_name)
-#
-#     def write(self, data):
-#         for string in self.l__filter_the_line_that_contains:
-#             if  string in data:
-#                 return
-#         self.stream.write(data)
-#         # self.stream.flush()
-#
-#     def flush(self):
-#         self.stream.flush()
-#
-# # example  ok
-# sys.stdout = FilterOut(sys.stdout, [r'Read -1'])  # filter out any line which contains "Read -1" in it
-# print('Read -1 expected 4096','aaaa')
-# print('Read 2342-1 expected 4096')
-# print('Read -1 expected 12')
-#
-# class HiddenPrints:
-#     def __enter__(self):
-#         self._original_stdout = sys.stdout
-#         sys.stdout = open(os.devnull, 'w')
-#
-#     def __exit__(self, exc_type, exc_val, exc_tb):
-#         sys.stdout.close()
-#         sys.stdout = self._original_stdout
-
-# # with HiddenPrints :
-# #     print('This line contains str_to_filter')
-# #     print('This line does not contain the filter string')
-# #     print('Another line that does not contain the filter string')
-
-
-
-
-
-
-
 
 
 class HiddenPrints:
@@ -152,43 +104,6 @@ class HiddenPrints:
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout.close()
         sys.stdout = self._original_stdout
-# class FilterOut(object):# from https://stackoverflow.com/questions/34904946/how-to-filter-stdout-in-python-logging
-#     def __init__(self, stream, l__filter_the_line_that_contains):
-#         self.stream = stream
-#         self.l__filter_the_line_that_contains = l__filter_the_line_that_contains
-#         # self.pattern = re.compile(re_pattern) if isinstance(re_pattern, str) else re_pattern
-#     def __getattr__(self, attr_name):
-#         return getattr(self.stream, attr_name)
-#     def write(self, data):
-#         for string in self.l__filter_the_line_that_contains:
-#             if  string in data:
-#                 return
-#         self.stream.write(data)
-#         # self.stream.flush()
-#     def flush(self):
-#         self.stream.flush()
-# ok
-# sys.stdout = FilterOut(sys.stdout, [r'DeprecationWarning: jsonschema.RefResolver is deprecated'])
-# sys.stderr = FilterOut(sys.stderr, [r'DeprecationWarning: jsonschema.RefResolver is deprecated'])
-
-# failed
-# class HiddenSpecified_Prints:
-#     def __init__(self,  l__filter_the_line_that_contains,l_stream=[sys.stdout,sys.stderr]):
-#         self.l_stream = l_stream
-#         self.l__filter_the_line_that_contains = l__filter_the_line_that_contains
-#     def __enter__(self):
-#         self._l_original_stream =[]
-#         for i,stream in enumerate(self.l_stream):
-#             self._l_original_stream.append(stream)
-#             self.l_stream[i]=FilterOut(self.l_stream[i], self.l__filter_the_line_that_contains)
-#
-#     def __exit__(self, exc_type, exc_val, exc_tb):
-#         for i,stream in enumerate(self.l_stream):
-#             self.l_stream[i] = self._l_original_stream[i]
-# with HiddenSpecified_Prints(['str_to_filter']):
-#     print('This line contains str_to_filter')
-#     print('This line does not contain the filter string')
-#     print('Another line that does not contain the filter string')
 
 
 class HiddenSpecified_OutAndErr:
@@ -218,8 +133,5 @@ class HiddenSpecified_OutAndErr:
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout = self._original_stdout
         sys.stderr = self._original_stderr
-if __name__=="__main__":
-    with HiddenSpecified_OutAndErr(['str_to_filter']):
-        print('This line contains str_to_filter')
-        print('This line does not contain the filter string')
-        print('Another line that does not contain the filter string')
+
+        

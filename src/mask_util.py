@@ -92,9 +92,6 @@ class Mask:
         return masked_image
     @staticmethod
     def rgbaImage__2__hw0_255(img: np.ndarray , ALPHA_THRES=0):
-        """
-        透明的地方（<ALPHA_THRES）就变成黑色（0；不透明就是白色（255
-        """
         assert len(img.shape)==3
         assert img.shape[-1]==4
         alpha=img[:,:,3]

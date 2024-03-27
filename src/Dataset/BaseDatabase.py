@@ -173,30 +173,4 @@ class BaseDatabase:
         o2c1[0,3]=0
         o2c1[1,3]=0
         return ref_database,img_id1,img1_warp, K1, o2c1[:3,:]
-    # @functools.cache
-    def get_batch_data_4_finetune(self,img_id0,BS):
-        # Q1INDEXs=[80, 107, 103, 88, 45, 81, 125, 84]
-        """
-        一个q0(ie 1 database)，然后在 database里选BS个q1
-        return ref_database, l_index1, l_img1_warp, l_K1, l_o2c1
-        """
-        ref_database=None
-        l_index1=[]
-        l_img1_warp=[]
-        l_K1=[]
-        l_o2c1=[]
-        for i in range(BS):
-            ref_database_, index1, img1_warp, K1, o2c1=self.get_data_4_finetune(
-                img_id0,
-                # img_id1=Q1INDEXs[i]
-            )
-            # print(f"[get_batch_data_4_finetune]index1,o2c1={index1},{o2c1}")
-            ddd(f"[get_batch_data_4_finetune]index1={index1}")
-            if  ref_database is None:
-                ref_database=ref_database_
-            assert ref_database_==ref_database
-            l_index1.append(index1)
-            l_img1_warp.append(img1_warp)
-            l_K1.append(K1)
-            l_o2c1.append(o2c1)
-        return ref_database,l_index1,l_img1_warp,l_K1,l_o2c1
+

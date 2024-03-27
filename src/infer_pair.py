@@ -31,51 +31,6 @@ def gen6d_imgPath2absolutePose(
     )
     return pose
 
-
-'''
-def gen6d_imgPaths2relativePose(
-        estimator,#Estimator4Co3dEval,
-        K,
-        image0_path,
-        image1_path,
-        input_image_eleRadian=0,
-        detection_outputs=(None,None),
-):
-    if (root_config.ZERO123_MULTI_INPUT_IMAGE):
-        relative_pose = estimator.estimate(
-            K=K,
-            q_img_path0=image0_path, q_img_path1=image1_path,
-        )
-    else:
-        if (root_config.one_SEQ_mul_Q0__one_Q0_mul_Q1):
-            assert 0,'check the correctness'
-            pose0 = np.array(estimator.get__zero123Input_info(image0_path)["pose"])
-        else:
-            pose0 = gen6d_imgPath2absolutePose(estimator, K,image0_path,input_image_eleRadian,detection_outputs=detection_outputs[0])
-        pose1 = gen6d_imgPath2absolutePose(estimator, K,image1_path,input_image_eleRadian,detection_outputs=detection_outputs[1])
-        # relative_pose = pose0.T @ pose1
-        relative_pose =pose1 @ np.linalg.inv(pose0)    
-        inter = dict(
-            pose0=pose0,
-            pose1=pose1,
-        )
-    return relative_pose,inter
-
-
-def gen6d_imgPaths2relativeRt(
-        estimator,#Estimator4Co3dEval,
-        K,
-        image0_path,
-        image1_path,
-        input_image_eleRadian=0,
-        detection_outputs=(None,None),
-):
-    relative_pose ,inter= gen6d_imgPaths2relativePose(
-        estimator, K,image0_path, image1_path,input_image_eleRadian,detection_outputs)
-    R = relative_pose[:3, :3]
-    t = relative_pose[:3, 3]
-    return R, t,inter
-'''
 #------------------------------- B -------------------------------
 def look_at_wrapper_wrapper(image_path_or_arr,bbox,K,save_path=None):#TODO K will be change
     def look_at(que_img, que_K, in_pose, bbox, size=None):
@@ -133,9 +88,8 @@ def get_path_after_warp(path:str):
 def gen6d_imgPath2absolutePose_B(estimator,#Estimator4Co3dEval,
                                  K,image_path,bbox,input_image_eleRadian=0,):
     """
-    传入原图。
-    进行透视变换后传给 。
-    返回透视变换回来的pose
+    given original img
+    return img after warp and ...
     """
     img_warp_path=get_path_after_warp(image_path)
     img_warp,  pose_rect,K_warp=look_at_wrapper_wrapper(image_path, bbox,K,save_path=img_warp_path)
@@ -231,10 +185,3 @@ def gen6d_imgPaths2relativeRt_B(
         pose1=pose1,
     )
     return R, t,relative_pose,inter
-
-# class Perspective():
-#     @staticmethod
-#     def look_at_crop(img,R,t,):
-#         """
-#         ret new_img,R,t
-#         """

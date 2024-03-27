@@ -47,28 +47,10 @@ class LINEMODDatabase(BaseDatabase) :#from Gen6d
         self.category = category
         # self.img_ids = [str(k) for k in range(len(os.listdir(f'{LINEMOD_ROOT}/{self.category}/JPEGImages')))]
         self.img_ids = [k for k in range(len(os.listdir(f'{LINEMOD_ROOT}/{self.category}/JPEGImages')))]
-        self.model = self.get_ply_model().astype(np.float32)
         self.object_center = np.zeros(3, dtype=np.float32)
         self.object_vert = np.asarray([0, 0, 1], np.float32)
         self.img_id2depth_range = {}
         self.img_id2pose = {}
-
-    def get_ply_model(self):
-        import plyfile
-        fn = Path(f'{LINEMOD_ROOT}/{self.category}/{self.category}.pkl')
-        if fn.exists(): return read_pickle(str(fn))
-        ply = plyfile.PlyData.read(f'{LINEMOD_ROOT}/{self.category}/{self.category}.ply')
-        data = ply.elements[0].data
-        x = data['x']
-        y = data['y']
-        z = data['z']
-        model = np.stack([x, y, z], axis=-1)
-        if model.shape[0] > 4096:
-            idxs = np.arange(model.shape[0])
-            np.random.shuffle(idxs)
-            model = model[idxs[:4096]]
-        save_pickle(model, str(fn))
-        return model
     def get_image_full_path(self, img_id):
         return f'{LINEMOD_ROOT}/{self.category}/JPEGImages/{int(img_id):06}.jpg'
 
@@ -243,43 +225,6 @@ class LinemodDataset(BaseDataset):
             l_bbox.append(bbox)
             Ks.append(K)
         return images_not_transformed,image_full_paths,rotations,translation31s,pose44s,l_bbox,Ks
-    def get_data(self, sequence_name, index0,index1,  q0ipr=0,q1ipr=0, ):
-        assert sequence_name=="" or self.__class__.__name__=='Co3dv2Dataset'
-        images_not_transformed, image_full_paths, rotations, translation31s,pose44s, l_bbox,Ks=self._get_from_database(index0, index1,q0ipr,q1ipr,)
-        batch = self._get_batch_4_relposepp(
-            transforms.Compose(
-                [
-                    transforms.ToTensor(),
-                    transforms.Resize(224),
-                    transforms.Normalize(
-                        mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
-                    ),
-                ]
-            ),
-            images_not_transformed, image_full_paths,
-            # rotations, translation31s,
-            pose44s,
-            l_bbox
-        )
-        # print(f"{image_full_paths=}")
-        # print(f"{rotations=}")
-        # print(f"{translation31s=}")
-        # print(f"{pose44s=}")
-        return batch
-    def get_data_4loftr(self, sequence_name, index0,index1, q0ipr=0,q1ipr=0, max_size=None ):
-        assert sequence_name=="" or self.__class__.__name__=='Co3dv2Dataset'
-        images_not_transformed, image_full_paths, rotations, translation31s,pose44s, l_bbox,Ks=\
-            self._get_from_database(
-                index0, index1, q0ipr,q1ipr, max_size,
-                mask_out=False,
-                image_full_path_TYPE=BaseDataset.ENUM_image_full_path_TYPE.resized,
-            )
-        relative_pose44 = pose44s[1] @ torch.linalg.inv(pose44s[0])
-        return {
-            'relative_pose44':relative_pose44,
-            'image_full_paths':image_full_paths,
-            'Ks':Ks,
-        }
     def get_data_4gen6d(self, sequence_name, ids  ,q0ipr=0,q1ipr=0,):
         assert sequence_name == "" or self.__class__.__name__ == 'Co3dv2Dataset'
         assert  len(ids)==2

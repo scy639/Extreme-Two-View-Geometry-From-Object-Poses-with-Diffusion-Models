@@ -10,8 +10,6 @@ from vis.InterVisualizer import InterVisualizer
 from vis.vis_rel_pose import PoseVisualizer
 import numpy as np
 import os,sys,math,functools,inspect,PIL
-# import matplotlib
-# matplotlib.use('Agg')
 class Global:
     anything={}
     class ImagePair:
@@ -76,13 +74,3 @@ class Global:
             ret=Pose_R_t_Converter.pose34_2_pose44(ret)
             return ret
 from debug_util import debug_imsave
-# if sys.argv[0].endswith('train_model.py'):
-if not sys.argv[0].endswith('_driver.py'):
-    pass
-else:
-    # from gen6d.Gen6D.pipeline import    Estimator4Co3dEval
-    # # from gen6d.Gen6D.utils.draw_utils import concat_images_list
-    # from gen6d.Gen6D.utils.database_utils  import look_at_crop
-    # from gen6d.Gen6D.utils.pose_utils  import let_me_look_at_2d
-    # from gen6d.Gen6D.utils.base_utils  import pose_compose,pose_inverse
-    pass

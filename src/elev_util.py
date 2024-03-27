@@ -2,7 +2,7 @@ import os.path
 import glob
 from imports import *
 import json
-if '4paper' not in sys.argv[0]:
+if 1:
     from import_util import is_in_sysPath
     # if(is_in_sysPath(path=os.path.abspath(os.path.join(os.path.dirname(__file__),os.path.pardir)))):
     #     from oee.utils.elev_est_api import elev_est_api

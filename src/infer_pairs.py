@@ -61,12 +61,6 @@ def infer_pairs(
     ret pytorch3d
     """
     model_name='E2VG'
-    also_infer_and_vis_otherModel=None 
-    
-    if also_infer_and_vis_otherModel is not None:
-        assert isinstance(also_infer_and_vis_otherModel,str)
-        assert model_name=='E2VG'
-        assert vis_result_folder is not None
     #-------------------------------------------------
     @functools.cache
     def path_2_imgArr(path):
@@ -180,96 +174,6 @@ def infer_pairs(
             relative_pose = opencv_2_pytorch3d__leftMulRelPose(relative_pose)
             R_pred_rel = relative_pose[:3, :3]
             T31_pred_rel = relative_pose[:3, 3:]
-        # elif (model_name == "relpose++"):
-        #     batch = relposepp_customDataset.get_data(ids=(0,j+1))
-        #     # Inputs
-        #     images = batch["image"].to(device).unsqueeze(0)
-        #     crop_params = batch["crop_params"].to(device).unsqueeze(0)
-        #     # Model forward pass
-        #     R_pred_rel, _ = evaluate_pairwise(
-        #         relposepp_model,
-        #         images,
-        #         crop_params,
-        #     )
-        #     T31_pred_rel=None
-        #     relative_pose=None
-        # elif (model_name == "loftr"):
-        #     raise NotImplementedError
-        # else:
-        #     raise NotImplementedError
-        # if also_infer_and_vis_otherModel is not None:
-        #     otherModel_ret = infer_pairs(
-        #         q0ImageData,
-        #         [q1ImageData],
-        #         refId=None,
-        #         #
-        #         auto_K=auto_K,
-        #         auto_bbox=auto_K,
-        #         #
-        #         vis_result_folder=None,
-        #         also_infer_and_vis_otherModel=None,
-        #         #
-        #         model_name=also_infer_and_vis_otherModel,
-        #     )
-        #     assert len(otherModel_ret)==1
-        #     otherModel_ret=otherModel_ret[0]
-        #     otherModel_R=otherModel_ret[0]
-        #     del otherModel_ret
-        if vis_result_folder:
-            assert model_name=='E2VG'
-            vis_result_folder=Path(vis_result_folder)
-            assert vis_result_folder.exists()
-            def vis_pose():
-                title = f"j={j} image0_path={image0_path} image1_path={image1_path}"
-                w2c = R_t_2_pose(R=R_pred_rel, t=[0, 0, 0])
-                l_w2c = [w2c @ gen6d_pose0_w2pytorch3d_leftMul, ]
-                l_color = ['b', ]
-                if also_infer_and_vis_otherModel is not None:
-                    l_w2c.append(
-                        R_t_2_pose(R=otherModel_R, t=[0, 0, 0]) @ gen6d_pose0_w2pytorch3d_leftMul)
-                    l_color.append('y')
-                tmp_zero123Input_info = model_estimator_instance.sparseViewPoseEstimator.ref_database.get_zero123Input_info()
-                tmp_eleRadian, zero123_input_img_path = tmp_zero123Input_info["elevRadian"], \
-                    tmp_zero123Input_info["img_path__in_ref"]
-                l_w2c.append(opencv_2_pytorch3d__leftMulW2cpose(
-                    # eleRadian_2_base_w2c(tmp_eleRadian)
-                    np.array(tmp_zero123Input_info["pose"])  # the same as expression above
-                ))
-                l_color.append("white")
-                l_w2c.append(gen6d_pose0_w2pytorch3d_leftMul)
-                l_color.append("grey")
-                title += f".elev={tmp_eleRadian * 180 / math.pi:.2f}°\nzero123 base img={zero123_input_img_path}"  # azim=-60, elev=30 by default
-                for w2c, color in zip(l_w2c, l_color):
-                    Global.poseVisualizer1.append(
-                        w2c,
-                        color=color,
-                    )
-                param = dict(
-                    l_w2c=l_w2c,
-                    l_color=l_color,
-                    do_not_show_base=1,
-                )
-                view0 = vis_w2cPoses(**param, title=title)
-                view1 = vis_w2cPoses(**param, no_margin=1, kw_view_init=dict(elev=30, azim=60))
-                view2 = vis_w2cPoses(**param, no_margin=1, kw_view_init=dict(elev=15, azim=180))
-                view3 = vis_w2cPoses(**param, no_margin=1, kw_view_init=dict(elev=45, azim=240))
-                # pose_save_path_format=osp.join(root_config.evalResultPath_co3d, f"[{model_name}-{root_config.idSuffix}]{category}-{sequence_name}-{key_frames[0]},{key_frames[1]} {{}}.npy")
-                zero123_input_img = imread(zero123_input_img_path)
-                ttt_w = 30
-                ttt_w2 = view0.shape[1] - (view1.shape[1] + view2.shape[1] + view3.shape[1])
-                ttt_w = max(ttt_w, ttt_w2)
-                ttt_h = ttt_w * zero123_input_img.shape[0] // zero123_input_img.shape[1]
-                zero123_input_img = cv2.resize(zero123_input_img, (ttt_w, ttt_h))
-                ret = cv2_util.concat_images_list(
-                    view0,
-                    cv2_util.concat_images_list(
-                        view1, view2, view3,
-                        zero123_input_img,
-                        vert=0
-                    ),
-                    vert=1,
-                )
-                return ret
 
             vis_w2cRelPoses_img = vis_pose()
             def tmpGet__vis_w2cRelPoses_img_containing_poseWhenRefine():
@@ -429,8 +333,6 @@ if __name__ == "__main__":
     
     
     # root_config.USE_CONFIDENCE=True
-    also_infer_and_vis_otherModel=None
-    # also_infer_and_vis_otherModel="relpose++"
     def _f(refId,l_path_bbox):
         vis_result_folder=Path(root_config.evalVisPath)/'_infer_custom'/refId
         os.makedirs(vis_result_folder, exist_ok=True)
@@ -443,8 +345,6 @@ if __name__ == "__main__":
             auto_bbox=False,
             #
             vis_result_folder=vis_result_folder,
-            #
-            also_infer_and_vis_otherModel=also_infer_and_vis_otherModel,
         )
     
 
@@ -459,53 +359,7 @@ if __name__ == "__main__":
     _f(refId,l_path_bbox) 
     
     
-    refId='toy_motor'
-    l_path_bbox=[
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/toy_motor/0.jpg',( 124,720,768,1212  ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/toy_motor/1.jpg',(460,230, 1521,1100  ),),
-    ]
-    _f(refId,l_path_bbox)  
     
-    
-    refId='teapot'
-    l_path_bbox=[
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/teapot/0.jpg',( 1167,607,1673,1227  ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/teapot/1.jpg',(  1096,41,1672,796 ),),
-    ]
-    _f(refId,l_path_bbox) 
-    
-    
-    refId='slipper'
-    # refId='slipper-manualElev70'
-    l_path_bbox=[
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/slipper/0.jpg',( 787,753,1679,1206  ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/slipper/1.jpg',(  47,725,1237,1280 ),),
-    ]
-    _f(refId,l_path_bbox)  
-    
-    
-    refId='carA'
-    l_path_bbox=[
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/carA/0.jpg',(   0.10076335877862595,0.5707019328585962,
-                                                                        0.6862595419847328,0.9359104781281791,         ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/carA/1.jpg',(   0.4854961832061069,0.08545269582909461,
-                                                                        0.9366412213740458,0.4883011190233978,        ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/carA/1-masked.jpg',(   0.4854961832061069,0.08545269582909461,
-                                                                        0.9366412213740458,0.4883011190233978,        ),),
-    ]
-    _f(refId,l_path_bbox) 
-    
-    
-    refId='carB'
-    l_path_bbox=[
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/carB/0.jpg',(    0.1282442748091603,0.49745676500508645,
-                                                                         0.6633587786259542,0.901322482197355,         ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/carB/1.jpg',(    0.0183206106870229,0.5493387589013224,
-                                                                         0.5992366412213741,0.9348931841302136,         ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/carB/2.jpg',(    0.4129770992366412,0.36012207527975587,
-                                                                         0.9778625954198473,0.9643947100712106,         ),),
-    ]
-    _f(refId,l_path_bbox) 
     
     
     refId='toy_pig'
@@ -519,27 +373,6 @@ if __name__ == "__main__":
     ]
     _f(refId,l_path_bbox) 
     
-    
-    refId='laundry_detergent'
-    l_path_bbox=[
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/laundry_detergent/0.jpg',(  0.43012211668928085,0.34791454730417093,
-                                                                                    0.9552238805970149,0.9542217700915565,            ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/laundry_detergent/1.jpg',(  0.44369063772048845,0.26754832146490337,
-                                                                                    0.9959294436906377,0.9053916581892166,             ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/laundry_detergent/2.jpg',(  0.3256445047489824,0.2807731434384537,
-                                                                                    0.9972862957937585,0.9786368260427264,            ),),
-        ('/sharedata/home/suncaiyi/space/cv/custom_data/laundry_detergent/3.jpg',(  0.3242876526458616,0.3723296032553408,
-                                                                                    0.9389416553595658,0.9348931841302136,           ),),
-    ]
-    _f(refId,l_path_bbox) 
-    
-    
-    # refId='xxx'
-    # l_path_bbox=[
-    #     ('/sharedata/home/suncaiyi/space/cv/custom_data/xxx/0.jpg',(             ),),
-    #     ('/sharedata/home/suncaiyi/space/cv/custom_data/xxx/1.jpg',(             ),),
-    # ]
-    # _f(refId,l_path_bbox) 
     
     
     
