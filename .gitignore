@@ -36,6 +36,7 @@ __pycache__
 
 __pycache__
 .idea
+pytorch3d
 
 !requirements.txt
 !media

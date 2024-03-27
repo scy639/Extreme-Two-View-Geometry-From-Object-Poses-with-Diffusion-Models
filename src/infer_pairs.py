@@ -174,72 +174,119 @@ def infer_pairs(
             relative_pose = opencv_2_pytorch3d__leftMulRelPose(relative_pose)
             R_pred_rel = relative_pose[:3, :3]
             T31_pred_rel = relative_pose[:3, 3:]
+            if vis_result_folder:
+                assert model_name=='E2VG'
+                vis_result_folder=Path(vis_result_folder)
+                assert vis_result_folder.exists()
+                def vis_pose():
+                    title = f"j={j} image0_path={image0_path} image1_path={image1_path}"
+                    w2c = R_t_2_pose(R=R_pred_rel, t=[0, 0, 0])
+                    l_w2c = [w2c @ gen6d_pose0_w2pytorch3d_leftMul, ]
+                    l_color = ['b', ]
+                    tmp_zero123Input_info = model_estimator_instance.sparseViewPoseEstimator.ref_database.get_zero123Input_info()
+                    tmp_eleRadian, zero123_input_img_path = tmp_zero123Input_info["elevRadian"], \
+                        tmp_zero123Input_info["img_path__in_ref"]
+                    l_w2c.append(opencv_2_pytorch3d__leftMulW2cpose(
+                        # eleRadian_2_base_w2c(tmp_eleRadian)
+                        np.array(tmp_zero123Input_info["pose"])  # the same as expression above
+                    ))
+                    l_color.append("white")
+                    l_w2c.append(gen6d_pose0_w2pytorch3d_leftMul)
+                    l_color.append("grey")
+                    title += f".elev={tmp_eleRadian * 180 / math.pi:.2f}°\nzero123 base img={zero123_input_img_path}"  # azim=-60, elev=30 by default
+                    for w2c, color in zip(l_w2c, l_color):
+                        Global.poseVisualizer1.append(
+                            w2c,
+                            color=color,
+                        )
+                    param = dict(
+                        l_w2c=l_w2c,
+                        l_color=l_color,
+                        do_not_show_base=1,
+                    )
+                    view0 = vis_w2cPoses(**param, title=title)
+                    view1 = vis_w2cPoses(**param, no_margin=1, kw_view_init=dict(elev=30, azim=60))
+                    view2 = vis_w2cPoses(**param, no_margin=1, kw_view_init=dict(elev=15, azim=180))
+                    view3 = vis_w2cPoses(**param, no_margin=1, kw_view_init=dict(elev=45, azim=240))
+                    # pose_save_path_format=osp.join(root_config.evalResultPath_co3d, f"[{model_name}-{root_config.idSuffix}]{category}-{sequence_name}-{key_frames[0]},{key_frames[1]} {{}}.npy")
+                    zero123_input_img = imread(zero123_input_img_path)
+                    ttt_w = 30
+                    ttt_w2 = view0.shape[1] - (view1.shape[1] + view2.shape[1] + view3.shape[1])
+                    ttt_w = max(ttt_w, ttt_w2)
+                    ttt_h = ttt_w * zero123_input_img.shape[0] // zero123_input_img.shape[1]
+                    zero123_input_img = cv2.resize(zero123_input_img, (ttt_w, ttt_h))
+                    ret = cv2_util.concat_images_list(
+                        view0,
+                        cv2_util.concat_images_list(
+                            view1, view2, view3,
+                            zero123_input_img,
+                            vert=0
+                        ),
+                        vert=1,
+                    )
+                    return ret
+                vis_w2cRelPoses_img = vis_pose()
+                def tmpGet__vis_w2cRelPoses_img_containing_poseWhenRefine():
+                    param = dict(
+                        do_not_show_base=1,
+                        title=f"",
+                        no_margin=1,
+                    )
+                    view0 = Global.poseVisualizer1.get_img(**param)
+                    view1 = Global.poseVisualizer1.get_img(**param, kw_view_init=dict(elev=30, azim=60))
+                    view2 = Global.poseVisualizer1.get_img(**param, kw_view_init=dict(elev=15, azim=180))
+                    view3 = Global.poseVisualizer1.get_img(**param, kw_view_init=dict(elev=45, azim=240))
+                    vis_w2cRelPoses_img_containing_poseWhenRefine = cv2_util.concat_images_list(view0, view1,
+                                                                                                view2, view3,
+                                                                                                vert=0)
+                    return vis_w2cRelPoses_img_containing_poseWhenRefine
 
-            vis_w2cRelPoses_img = vis_pose()
-            def tmpGet__vis_w2cRelPoses_img_containing_poseWhenRefine():
-                param = dict(
-                    do_not_show_base=1,
-                    title=f"",
-                    no_margin=1,
+                if root_config.one_SEQ_mul_Q0__one_Q0_mul_Q1:
+                    vis_img = cv2_util.concat_images_list(
+                        cv2_util.concat_images_list(
+                            imread(image0_path),
+                        ),
+                        cv2_util.concat_images_list(
+                            imread(image1_path),
+                            Global.intermediate["E2VG"]["inter_img"].l[0],
+                            vert=0,
+                            max_h=Global.intermediate["E2VG"]["inter_img"].l[0].shape[0]
+                        ),
+                        vis_w2cRelPoses_img,
+                        tmpGet__vis_w2cRelPoses_img_containing_poseWhenRefine(),
+                        vert=True
+                    )
+                else:
+                    vis_img = cv2_util.concat_images_list(
+                        cv2_util.concat_images_list(
+                            imread(image0_path),
+                            Global.intermediate["E2VG"]["inter_img"].l[0],
+                            vert=0,
+                            max_h=Global.intermediate["E2VG"]["inter_img"].l[0].shape[0]
+                        ),
+                        cv2_util.concat_images_list(
+                            imread(image1_path),
+                            Global.intermediate["E2VG"]["inter_img"].l[1],
+                            vert=0,
+                            max_h=Global.intermediate["E2VG"]["inter_img"].l[1].shape[0]
+                        ),
+                        vis_w2cRelPoses_img,
+                        tmpGet__vis_w2cRelPoses_img_containing_poseWhenRefine(),
+                        vert=True
+                    )
+                cv2_util.putText(
+                    vis_img, Global.poseVisualizer1.get_pose_str_A(),
+                    (vis_img.shape[1] - 1000, vis_img.shape[0] * 3 // 5),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    (180, 180, 180),
                 )
-                view0 = Global.poseVisualizer1.get_img(**param)
-                view1 = Global.poseVisualizer1.get_img(**param, kw_view_init=dict(elev=30, azim=60))
-                view2 = Global.poseVisualizer1.get_img(**param, kw_view_init=dict(elev=15, azim=180))
-                view3 = Global.poseVisualizer1.get_img(**param, kw_view_init=dict(elev=45, azim=240))
-                vis_w2cRelPoses_img_containing_poseWhenRefine = cv2_util.concat_images_list(view0, view1,
-                                                                                            view2, view3,
-                                                                                            vert=0)
-                return vis_w2cRelPoses_img_containing_poseWhenRefine
-
-            if root_config.one_SEQ_mul_Q0__one_Q0_mul_Q1:
-                vis_img = cv2_util.concat_images_list(
-                    cv2_util.concat_images_list(
-                        imread(image0_path),
-                    ),
-                    cv2_util.concat_images_list(
-                        imread(image1_path),
-                        Global.intermediate["E2VG"]["inter_img"].l[0],
-                        vert=0,
-                        max_h=Global.intermediate["E2VG"]["inter_img"].l[0].shape[0]
-                    ),
-                    vis_w2cRelPoses_img,
-                    tmpGet__vis_w2cRelPoses_img_containing_poseWhenRefine(),
-                    vert=True
-                )
-            else:
-                vis_img = cv2_util.concat_images_list(
-                    cv2_util.concat_images_list(
-                        imread(image0_path),
-                        Global.intermediate["E2VG"]["inter_img"].l[0],
-                        vert=0,
-                        max_h=Global.intermediate["E2VG"]["inter_img"].l[0].shape[0]
-                    ),
-                    cv2_util.concat_images_list(
-                        imread(image1_path),
-                        Global.intermediate["E2VG"]["inter_img"].l[1],
-                        vert=0,
-                        max_h=Global.intermediate["E2VG"]["inter_img"].l[1].shape[0]
-                    ),
-                    vis_w2cRelPoses_img,
-                    tmpGet__vis_w2cRelPoses_img_containing_poseWhenRefine(),
-                    vert=True
-                )
-            cv2_util.putText(
-                vis_img, Global.poseVisualizer1.get_pose_str_A(),
-                (vis_img.shape[1] - 1000, vis_img.shape[0] * 3 // 5),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                0.7,
-                (180, 180, 180),
-            )
-            tmp_save_path = vis_result_folder/f'{refId}--{Path(image0_path).name}--{Path(image1_path).name}.jpg'
-            imsave(tmp_save_path, vis_img)
-            print(f"visual result: {tmp_save_path}")
-            Global.poseVisualizer1.clear()
-            """#-------------------------------
-            vis1.run(l_R, l_color, l_note, l_T=l_T, elev_degree=35)"""
-
-
-
+                tmp_save_path = vis_result_folder/f'{refId}--{Path(image0_path).name}--{Path(image1_path).name}.jpg'
+                imsave(tmp_save_path, vis_img)
+                print(f"visual result: {tmp_save_path}")
+                Global.poseVisualizer1.clear()
+                """#-------------------------------
+                vis1.run(l_R, l_color, l_note, l_T=l_T, elev_degree=35)"""
 
         l_R_T_pose. append ((R_pred_rel, T31_pred_rel, relative_pose))
     return l_R_T_pose

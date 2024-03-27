@@ -43,7 +43,9 @@ dataPath_zero123=os.path.join(path_root,"zero123/zero1/output_im")
 dataPath_gen6d=os.path.join(path_root,projPath_gen6d,"data/zero123")
 from path_configuration import *
 weightPath_zero123=os.path.join(path_root,"../weight/105000.ckpt")
-weightPath_selector=os.path.join(  path_root ,"gen6d/Gen6D/data/model/selector_pretrain/model_best.pth")
+weightPath_gen6d='../weight/weight_gen6d'
+weightPath_selector=os.path.join(  weightPath_gen6d ,"selector_pretrain/model_best.pth")
+weightPath_refiner=os.path.join(  weightPath_gen6d ,"refiner_pretrain/model_best.pth")
 weightPath_loftr=os.path.join(path_root  ,"../../indoor_ds_new.ckpt")
 evalResultPath_co3d=os.path.join(path_root,"result/eval_result")
 evalVisPath=os.path.join(path_root,"result/visual")

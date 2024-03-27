@@ -160,6 +160,9 @@ class Gen6DEstimator:
         if refiner_cfg['network']=='selector':
             pth_path=root_config.weightPath_selector
             del refiner_cfg["name"]
+        elif refiner_cfg['network']=='refiner':
+            pth_path=root_config.weightPath_refiner
+            del refiner_cfg["name"]
         else:
             pth_path=f'data/model/{refiner_cfg["name"]}/model_best.pth'
         refiner:network.VolumeRefiner = name2network[refiner_cfg['network']](refiner_cfg)

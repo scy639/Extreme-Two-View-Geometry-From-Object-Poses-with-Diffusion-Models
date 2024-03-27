@@ -1,4 +1,3 @@
-import gzip
 import json
 import os.path as osp
 import random, os
@@ -6,9 +5,7 @@ import random, os
 import numpy as np
 import torch
 from PIL import Image, ImageFile
-from pytorch3d.renderer import PerspectiveCameras
 # from torch.utils.data import Dataset
-from torchvision import transforms
 # try:
 #     from utils.bbox import square_bbox
 #     # from utils.misc import get_permutations

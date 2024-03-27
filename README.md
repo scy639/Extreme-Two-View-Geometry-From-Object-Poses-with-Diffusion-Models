@@ -55,10 +55,10 @@ Modify infer_custom.py and run it.
 For more config, refer to src/root_config.py -->
 
 ## Todo List
-- [ ] Check setup; check released version's performance is the same as the version when doing experiments
+- [ ] Check setup
 - [x] Upload GSO testset to a cloud drive
 - [ ] Remove unused code; better document and comment
-- [ ] Remove unused package from requirement.txt
+- [x] Remove unused package from requirement.txt
 - [ ] Provide command line interface
 - [ ] ...
 <!--  ## Acknowledgements -->
