@@ -7,11 +7,11 @@ class Zero123_BatchB_Input:
                  ):
         """
         folder_outputIms:
-            1. initially, means: zero123渲染图放到哪个文件夹,name of folder, not path
-            2. 在sample_model_batchB_wrapper中某一步后,its meaning 会从name变成path
+            1. initially, means: where to put Ig. name of folder, not path
+            2. after sample_model_batchB_wrapper ,its meaning turn from name to path
         input_image_path:
             1. initially, means: full path of input image
-            2. 在sample_model_batchB_wrapper中某一步后,its meaning 会从path变成tensor
+            2. after sample_model_batchB_wrapper , its meaning turn from path to tensor
         outputims:
             1. None
             2. list of output image path

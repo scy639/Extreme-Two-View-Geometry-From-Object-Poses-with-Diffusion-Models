@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from pose_util import *
 
-print(f"__name__ = {__name__}, __package__ = {__package__}, __file__ = {__file__}")
 # if (__name__ == '__main__'):
 if (__package__ == '' or __package__ == None):
     from extrinsic2pyramid.util.camera_pose_visualizer import CameraPoseVisualizer

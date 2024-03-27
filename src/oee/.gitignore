@@ -1,6 +1,4 @@
-# 忽略所有文件和文件夹
 *
-#!*/将所有子目录列入白名单；new bing
 !*/
 !/.gitignore
 !/.rsync_exclude

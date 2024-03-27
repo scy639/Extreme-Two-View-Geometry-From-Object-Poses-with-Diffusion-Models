@@ -92,15 +92,6 @@ def imgPath2elevRadian(K,input_image_path,run4gen6d_main,id_):
         # ret=[os.path.join(output_dir,f"{i}.jpg") for i in range(4)]
         assert len(l_xyz)==len(l__path_output_im)
         return l__path_output_im
-    '''
-    def debug3523():
-        img_dir ="/sharedata/home/suncaiyi/space/One-2-3-45/exp/00318_warp copy9(min_elev=1, max_elev=89)/stage2_8"
-        img_paths = []
-        for i in range(4):
-            img_paths.append(f"{img_dir}/0_{i}.png")
-        return img_paths
-    fourNearImagePaths=debug3523()
-    '''
     if root_config.Cheat.force_elev:
         print(f"[warning] You enable {root_config.Cheat.force_elev=}")
         fourNearImagePaths='(Cheat.force_elev)'
@@ -136,21 +127,6 @@ def imgPath2elevRadian(K,input_image_path,run4gen6d_main,id_):
         Global.tmp4SecondTimeDebugElev=[]
     Global.tmp4SecondTimeDebugElev.append(info)
     return elev
-
-""" 这一堆新参数要层层传进来，太麻烦了，quit
-def get_base_w2c(eleRadian,obj_w_pixel,obj_h_pixel,img_w , img_h ,fx,fy):
-    base_xyz, useless__l_xyz = eleRadian_2_baseXyz_lXyz(eleRadian=eleRadian)
-    def _f(x,y, ):
-        z4normObj = get_z_4_normObj(fx=fx, fy=fy,
-                                    obj_w_pixel=obj_w_pixel, obj_h_pixel=obj_h_pixel,
-                                    img_w=img_w, img_h=img_h)
-        pose=xyz2pose(x,y,z4normObj)
-        return pose
-    pose=_f(x=base_xyz[0],y=base_xyz[1] )
-    assert pose.shape==(3,4)
-    pose=np.concatenate([pose,np.array([[0,0,0,1]])],axis=0)
-    return pose
-"""
 def eleRadian_2_base_w2c(eleRadian):
     base_xyz, useless__l_xyz = eleRadian_2_baseXyz_lXyz(eleRadian=eleRadian)
     pose=xyz2pose(*base_xyz)

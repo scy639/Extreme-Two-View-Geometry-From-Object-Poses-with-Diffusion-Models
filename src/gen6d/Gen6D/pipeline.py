@@ -5,7 +5,6 @@ from oee.utils.elev_est_api import imgPath2IPRbyOEE
 from imports import *
 from misc_util import *
 from .scy import Config
-import json5
 from .utils.draw_utils import pts_range_to_bbox_pts, draw_bbox_3d, draw_bbox_3d_dpt
 import argparse
 import subprocess
@@ -13,14 +12,11 @@ from pathlib import Path
 import os
 import numpy as np
 from skimage.io import imsave, imread
-from tqdm import tqdm
 import json
 from .dataset.database import parse_database_name, get_ref_point_cloud
 from .estimator import name2estimator, Gen6DEstimator
 from .eval import visualize_intermediate_results
-from .prepare import video2image
 from .utils.base_utils import load_cfg, project_points
-from .utils.pose_utils import pnp
 from .scy.DebugUtil import *
 from .scy.gen6dGlobal import gen6dGlobal
 from .scy.IntermediateResult import IntermediateResult

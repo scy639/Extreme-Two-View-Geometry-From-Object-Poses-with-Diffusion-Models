@@ -5,31 +5,6 @@ import torch
 
 
 def get_parser(**parser_kwargs):
-    # def str2bool(v):
-    #     if isinstance(v, bool):
-    #         return v
-    #     if v.lower() in ("yes", "true", "t", "y", "1"):
-    #         return True
-    #     elif v.lower() in ("no", "false", "f", "n", "0"):
-    #         return False
-    #     else:
-    #         raise argparse.ArgumentTypeError("Boolean value expected.")
-    # parser.add_argument(
-    #     "-d",
-    #     "--debug",
-    #     type=str2bool,
-    #     nargs="?",
-    #     const=True,
-    #     default=False,
-    #     help="enable post-mortem debugging",
-    # )
-    # parser.add_argument(
-    #     "-s",
-    #     "--seed",
-    #     type=int,
-    #     default=23,
-    #     help="seed for seed_everything",
-    # )
 
     parser = argparse.ArgumentParser(**parser_kwargs)
 
@@ -72,21 +47,12 @@ def main(
     args.output_dir=output_dir
     args.num_samples=num_samples
 
-    # opt, unknown = parser.parse_known_args()
-    # if opt.name and opt.resume:
-    #     raise ValueError(
-    #         "-n/--name and -r/--resume cannot be specified both."
-    #         "If you want to resume training in a new log folder, "
-    #         "use -n/--name in combination with --resume_from_checkpoint"
-    #     )
 
     #args: output_dir, input_image_path, num_samples
     folder_output_ims:str=sample_model_( input_image_path=input_image_path, num_samples=num_samples, id=id,
                                   batch_sample=True,
                                   ddim_steps=ddim_steps,
                                   **kw)
-    # folder_output_ims="/root/autodl-tmp/cv/zero123/zero123/zero123/output_im/skateboard--207_21896_45453"
-    # folder_output_ims="/root/autodl-tmp/cv/zero123/zero1/output_im/book--102_11955_20634"
     if 'only_gen' in kw and kw['only_gen']:
         l__path_output_im:list=OutputIm_Name_Parser.parse_B(folder_output_ims)
         return l__path_output_im

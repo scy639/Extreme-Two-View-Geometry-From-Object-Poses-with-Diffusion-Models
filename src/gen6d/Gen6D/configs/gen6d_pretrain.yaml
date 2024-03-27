@@ -7,7 +7,6 @@ refiner:  configs/refiner/refiner_pretrain.yaml
 
 # ref_resolution: 128   # reference image resolution
 # ref_view_num: 64      # view number used in selection
-#scy
 ref_resolution: 128   # reference image resolution
 # ref_view_num: 128      # view number used in selection
 #ref_view_num: 128*4

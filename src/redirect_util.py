@@ -31,22 +31,6 @@ def redirectA(dir_:str,log_file_prefix: str):
     sys.stdout = open(logFilePath, 'w')
 
 
-# class myStdout:https://blog.csdn.net/sinat_38682860/article/details/108978605
-#     def __init__(self):
-#         self.stdoutbak = sys.stdout
-#         self.stderrbak = sys.stderr
-#         sys.stdout = self
-#         sys.stderr = self
-#     def write(self, info):
-
-#     def restoreStd(self):
-
-#         sys.stdout = self.stdoutbak
-#         sys.stderr = self.stderrbak
-
-#     def __del__(self):
-#         self.restoreStd()
-
 
 
 
