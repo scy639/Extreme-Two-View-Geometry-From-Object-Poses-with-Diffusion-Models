@@ -88,4 +88,6 @@ In this repository, we have used codes from the following repositories. We thank
 }
 ```
 
+## Follow-up work
+[Generalizable Single-view Object Pose Estimation via Two-side Generation and Matching, WACV 2025](https://arxiv.org/abs/2411.15860) (improved accuracy but slower)
 
