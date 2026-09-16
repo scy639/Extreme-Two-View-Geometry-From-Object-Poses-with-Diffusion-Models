@@ -65,8 +65,6 @@ For more config, refer to src/root_config.py -->
 - [x] Upload GSO testset to a cloud drive
 - [ ] Remove unused code; better document and comment
 - [x] Remove unused package from requirement.txt
-- [ ] Provide command line interface
-- [ ] ...
 
 ## Acknowledgements
 In this repository, we have used codes from the following repositories. We thank all the authors for sharing great codes.
@@ -85,6 +83,14 @@ In this repository, we have used codes from the following repositories. We thank
       eprint={2402.02800},
       archivePrefix={arXiv},
       primaryClass={cs.CV}
+}
+@InProceedings{sun2024generalizable,
+    title     = {Generalizable Single-View Object Pose Estimation by Two-Side Generating and Matching},
+    author    = {Sun, Yujing and Sun, Caiyi and Liu, Yuan and Ma, Yuexin and Yiu, Siu Ming},
+    booktitle = {Proceedings of the Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {February},
+    year      = {2025},
+    pages     = {545-556}
 }
 ```
 
